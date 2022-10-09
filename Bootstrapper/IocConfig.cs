@@ -16,6 +16,7 @@ namespace SistemasSalgados.Bootstrapper
         public static void Auth(IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRoleService, UserRoleService>();
         }
 
         private static void Context(IServiceCollection services)

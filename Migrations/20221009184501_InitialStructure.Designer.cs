@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemasSalgados.Persistence.Configuration.Context;
 
@@ -11,9 +12,10 @@ using SistemasSalgados.Persistence.Configuration.Context;
 namespace SistemasSalgados.Migrations
 {
     [DbContext(typeof(SistemaSalgadosDbContext))]
-    partial class SistemaSalgadosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221009184501_InitialStructure")]
+    partial class InitialStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
