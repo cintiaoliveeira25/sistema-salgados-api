@@ -28,14 +28,16 @@ namespace SistemasSalgados.Controllers.Base
         }
 
         [HttpGet]
-        public virtual async Task<IActionResult> GetAll()
+        public virtual async Task<IActionResult> GetAll([FromQuery] QueryParams queryParams)
         {
-            List<TEntity> items = await _baseService.Select().ToListAsync();
+            IQueryable<TEntity> query = _baseService.Select();
 
-            if (items == null || items.Count == 0)
+            var pagedResult = await ApplyPaginationParams(queryParams, query);
+
+            if (pagedResult == null)
                 return NotFound();
 
-            return Ok(items);
+            return Ok(pagedResult);
         }
 
         [HttpPost]
@@ -58,6 +60,31 @@ namespace SistemasSalgados.Controllers.Base
                 return BadRequest(result);
 
             return Ok(entity);
+        }
+
+        protected virtual async Task<PagedResult<TEntity>> ApplyPaginationParams(QueryParams queryParams, IQueryable<TEntity> query)
+        {
+            if (queryParams.ActiveItems)
+                query = query.Where(p => p.IsActive);
+
+            int count = await query.CountAsync();
+
+            if (!queryParams.BringAll)
+            {
+                query = query.Skip(queryParams.Offset)
+                                .Take(queryParams.PageSize);
+            }
+
+            List<TEntity> data = await query.ToListAsync();
+
+            if (data == null || data.Count == 0)
+                return null;
+
+            return new(queryParams)
+            {
+                Count = count,
+                Data = data,
+            };
         }
     }
 }
