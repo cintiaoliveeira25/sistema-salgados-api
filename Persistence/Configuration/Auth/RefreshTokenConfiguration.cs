@@ -4,9 +4,9 @@ using SistemasSalgados.Persistence.Configuration.Base;
 
 namespace SistemasSalgados.Persistence.Configuration.Auth
 {
-    public class UserConfiguration : BaseEntityConfiguration<User>
+    class RefreshTokenConfiguration : BaseEntityConfiguration<RefreshToken>
     {
-        public override void Configuration(EntityTypeBuilder<User> builder)
+        public override void Configuration(EntityTypeBuilder<RefreshToken> builder)
         { }
     }
 }

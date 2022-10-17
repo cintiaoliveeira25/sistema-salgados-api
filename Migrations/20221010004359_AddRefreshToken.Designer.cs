@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemasSalgados.Persistence.Configuration.Context;
 
@@ -11,9 +12,10 @@ using SistemasSalgados.Persistence.Configuration.Context;
 namespace SistemasSalgados.Migrations
 {
     [DbContext(typeof(SistemaSalgadosDbContext))]
-    partial class SistemaSalgadosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221010004359_AddRefreshToken")]
+    partial class AddRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace SistemasSalgados.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshToken", (string)null);
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("SistemasSalgados.Models.Auth.User", b =>
@@ -101,7 +103,7 @@ namespace SistemasSalgados.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("SistemasSalgados.Models.Auth.UserRole", b =>
@@ -135,7 +137,7 @@ namespace SistemasSalgados.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRole", (string)null);
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("SistemasSalgados.Models.Auth.RefreshToken", b =>

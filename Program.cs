@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using SistemasSalgados.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +14,15 @@ builder.Services.ConfigHealthCheck(connectionString);
 builder.Services.ConfigIoc();
 builder.Services.ConfigSwagger();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    AuthorizationPolicy policy = new AuthorizationPolicyBuilder()
+                   .RequireAuthenticatedUser()
+                   .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                   .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
+builder.Services.AddApplicationAuth(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +48,8 @@ app.UseCors(options =>
 });
 
 app.UseRouting();
+
+app.UseApplicationAuth();
 
 app.UseHttpsRedirection();
 

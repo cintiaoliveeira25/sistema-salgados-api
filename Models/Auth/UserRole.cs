@@ -1,7 +1,6 @@
-﻿using SistemasSalgados.Models.Auth;
-using SistemasSalgados.Models.Base;
+﻿using SistemasSalgados.Models.Base;
 
-namespace SistemasSalgados.Models
+namespace SistemasSalgados.Models.Auth
 {
     public class UserRole : BaseEntity
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SistemasSalgados.Extensions;
 using SistemasSalgados.Models.Base;
 using SistemasSalgados.Services.Interfaces.Base;
 
@@ -10,10 +11,25 @@ namespace SistemasSalgados.Controllers.Base
     public class BaseController<TEntity> : ControllerBase where TEntity : BaseEntity
     {
         protected readonly IBaseService<TEntity> _baseService;
+        private readonly IHttpContextAccessor _contextAccessor;
+        protected int _userId;
 
         public BaseController(IBaseService<TEntity> baseService)
         {
             _baseService = baseService;
+        }
+
+        public BaseController(IBaseService<TEntity> baseService, IHttpContextAccessor contextAccessor)
+        {
+            this._baseService = baseService;
+            _contextAccessor = contextAccessor;
+            GetUserId();
+        }
+
+        private void GetUserId()
+        {
+            string _userId = _contextAccessor.HttpContext.User?.Identity.GetUserId();
+            int.TryParse(_userId, out this._userId);
         }
 
         [HttpGet("{id:int}")]

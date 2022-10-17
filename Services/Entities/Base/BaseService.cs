@@ -7,8 +7,11 @@ namespace SistemasSalgados.Services.Entities.Base
 {
     public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : BaseEntity
     {
-        protected readonly SistemaSalgadosDbContext _dbContext;
-        public BaseService(SistemaSalgadosDbContext dbContext) => _dbContext = dbContext;
+        protected SistemaSalgadosDbContext _dbContext;
+        public BaseService(SistemaSalgadosDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public IQueryable<TEntity> Select()
         {
